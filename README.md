@@ -1,31 +1,30 @@
-CREATE TABLE Employees (
-    EmpID INTEGER PRIMARY KEY,
-    FirstName TEXT,
-    LastName TEXT,
-    Age INTEGER,
-    Department TEXT,
-    Salary REAL,
-    Email TEXT DEFAULT NULL
-);
-INSERT INTO Employees (EmpID, FirstName, LastName, Age, Department, Salary, Email)
-VALUES (1, 'John', 'Doe', 30, 'HR', 50000.00, 'john.doe@example.com');
-INSERT INTO Employees (EmpID, FirstName, LastName, Age, Department, Salary, Email)
-VALUES (2, 'Jane', 'Smith', NULL, 'Finance', 60000.00, NULL);
-INSERT INTO Employees (EmpID, FirstName, Department, Salary)
-VALUES (3, 'Raj', 'IT', 55000.00);
-UPDATE Employees
-SET Age = 28
-WHERE EmpID = 2;
-UPDATE Employees
-SET Salary = Salary + 5000
-WHERE Department = 'IT';
-DELETE FROM Employees
-WHERE EmpID = 3;
-BEGIN TRANSACTION;
-DELETE FROM Employees WHERE EmpID = 2;
+USE LibraryDB;
+INSERT INTO Authors (Name, Country) VALUES 
+('J.K. Rowling', 'UK'),
+('George Orwell', 'UK'),
+('Chetan Bhagat', 'India');
+INSERT INTO Books (Title, Genre, PublishedYear, AuthorID) VALUES 
+('Harry Potter', 'Fantasy', 2001, 1),
+('1984', 'Dystopian', 1949, 2),
+('Five Point Someone', 'Fiction', 2004, 3);
+INSERT INTO Members (Name, Email, Phone, MembershipDate) VALUES 
+('Alice Sharma', 'alice@gmail.com', '9876543210', '2023-01-10'),
+('Bob Verma', 'bob@yahoo.com', '9123456780', '2023-03-20');
+INSERT INTO Staff (Name, Role, Email) VALUES 
+('Anjali Mehta', 'Librarian', 'anjali@library.com'),
+('Ravi Kumar', 'Assistant', 'ravi@library.com');
+INSERT INTO Borrow (BookID, MemberID, BorrowDate, ReturnDate) VALUES 
+(1, 1, '2024-01-15', '2024-02-01'),
+(2, 2, '2024-02-10', NULL);
+UPDATE Members
+SET Phone = '9999999999'
+WHERE Name = 'Alice Sharma';
+UPDATE Staff
+SET Role = 'Senior Librarian'
+WHERE Name = 'Anjali Mehta';
+DELETE FROM Books
+WHERE Title = '1984';
+BEGIN;
+DELETE FROM Members WHERE Name = 'Bob Verma';
 ROLLBACK;
-INSERT INTO Employees (EmpID, FirstName, LastName, Age, Department, Salary, Email)
-SELECT 4, FirstName, LastName, Age, Department, Salary, Email
-FROM Employees
-WHERE EmpID = 1;
-SELECT * FROM Employees;
+SELECT * FROM Members;
